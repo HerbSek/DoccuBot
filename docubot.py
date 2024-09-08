@@ -35,7 +35,7 @@ custom_header = """
         background-color: #e74c3c;
     }
     .stApp {
-        margin-top: 60px; /* Prevent content from overlapping with the header */
+        margin-top: 60px;
     }
     </style>
 """
