@@ -11,6 +11,11 @@ def response_generator(prompt):
 write_up = "Docu_Bot"
 st.header(write_up, divider='rainbow')
 
+col1,col2,col3 = st.columns(3)
+
+with col1:
+    st.write('An interactive tool used to chat with your pdf documents')
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
