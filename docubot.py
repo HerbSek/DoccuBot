@@ -18,7 +18,7 @@ hide_streamlit_watermark = """
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .stApp { bottom: 0px; }
-    .viewerBadge_container__1QSob { display: none !important; }
+    .viewerBadge_link__1S137 { display: none !important; }
     </style>
     """
 st.markdown(hide_streamlit_watermark, unsafe_allow_html=True)
