@@ -16,9 +16,9 @@ col1,col2,col3 = st.columns(3)
 with col1:
     st.write('An interactive tool used to chat with your pdf documents')
 with col2:
-    st.write('An interactive tool used to chat with your pdf documents')
+    st.write('Upload your pdfs in the navigation bar ')
 with col3:
-    st.write('An interactive tool used to chat with your pdf documents')
+    st.write('Ask it any question from the pdf to give out results')
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
