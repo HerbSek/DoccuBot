@@ -2,6 +2,17 @@ import streamlit as st
 import random
 import time
 
+st.set_page_config(page_title="Custom Streamlit App", page_icon=":smile:", layout="wide")
+
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 def response_generator(prompt):
     response = "Lets start working!!"
     for word in response.split():
