@@ -1,11 +1,9 @@
 import streamlit as st
 import random
 import time
-
-st.set_page_config(page_title="DoccuBot", page_icon=":happy:", layout="wide")
-
-
-
+import numpy as np 
+import pandas as pd 
+st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
 
 custom_header = """
@@ -55,6 +53,7 @@ st.markdown("""
 custom_col_style = """
     <style>
     .col-box {
+        margin-top: -20px; 
         padding: 20px;
         border-radius: 10px;
         color: white;
@@ -64,28 +63,25 @@ custom_col_style = """
     }
     .col1-bg {
        background-color: #ff7f0e;  /* Orange background */
-        margin-bottom: 10px;
+        background-color: #ffa64d;
+        margin-bottom: 40px;
     }
     .col2-bg {
         background-color: #2ca02c;  /* Green background */
-         margin-bottom: 20px;
+        background-color: #66cc66;
+         margin-bottom: 40px;
     }
     .col3-bg {
        
           background-color: #1f77b4;  /* Blue background */
-         margin-bottom: 20px;
+          background-color: #5ab7e8;
+         margin-bottom: 40px;
     }
     .stApp {
         margin-top: 50px;
     }
     </style>
 """
-
-
-
-
-
-
 
 
 
@@ -149,7 +145,7 @@ with col2:
 with col3:
     st.markdown("""
     <div class="col-box col3-bg">
-        <p>Query and Retrieve: Ask any technical or non-technical question regarding the content of your PDFs. Get immediate, data-driven answers powered by our robust document understanding engine.</p>
+        <p>Query and Retrieve: Ask any technical or non-technical question regarding the content of your PDFs.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -161,7 +157,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-prompt = st.chat_input("Chat with Docu_Bot")
+prompt = st.chat_input("What information are you looking for from your pdf ?")
 if prompt:    
     st.session_state.messages.append({"role": "user", "content": prompt})
 
@@ -178,6 +174,28 @@ if prompt:
 
 
 with st.sidebar:
-    st.file_uploader(label='Upload pdf')
+    mylabel = st.header('Upload')
+    files = st.file_uploader(' ' , accept_multiple_files=False, type='pdf')
+
+    if files:
+        # # Extract the file names and store them in a list
+        # file_names = [file.name for file in files]
+
+        # # Create a pandas Series for the file names
+        # files_s = pd.Series(file_names, name='PDFS')
+
+        # # Display the Series in the Streamlit app
+        # st.write(files_s)
+
+        # Print for debugging purposes
+        print(files)
+    else:
+        st.write("No file uploaded yet.")
+  
+
+  
+
+    
+
     
 
