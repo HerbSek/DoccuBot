@@ -6,6 +6,15 @@ import pandas as pd
 st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
 
+
+
+
+
+
+
+
+
+
 # custom_header = """
 #     <style>
 #     .custom-header {
@@ -92,21 +101,22 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# hide_streamlit_watermark = """
-#     <style>
-    
-#     footer {visibility: hidden;}
-#     .stApp { bottom: 0px; }
-#     .viewerBadge_link__1S137 { display: none !important; }
-#     </style>
-#     """
-# st.markdown(hide_streamlit_watermark, unsafe_allow_html=True)
 
-def response_generator(prompt):
-    response = "Lets start working!!"
-    for word in response.split():
-        yield word + " "
-        time.sleep(0.2)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+
+def response_generator(prompt, file):
+    if file is None:
+        response = st.error(" Please upload a file. Please check the sidebar to upload one!!!")   
+       
+      
+    if file is not None:
+        response = "Lets start working!!"
+        for word in response.split():
+            yield word + " "
+            time.sleep(0.2)
 
 write_up = "DoccuBot"
 st.header(write_up, divider='rainbow')
@@ -146,25 +156,6 @@ with col3:
     """, unsafe_allow_html=True)
 
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-prompt = st.chat_input("Need help with your pdf?")
-if prompt:    
-   
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-
-    with st.chat_message("assistant"):
-        response = st.write_stream(response_generator(prompt))    
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
 
 with st.sidebar:
     mylabel = st.header('Upload')
@@ -181,6 +172,28 @@ with st.sidebar:
         st.success('File uploaded successfully !!!')
     else:
         st.error("No file uploaded yet.")
+
+
+
+
+
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+prompt = st.chat_input("Need help with your pdf?")
+
+if prompt:    
+   
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    with st.chat_message("assistant"):
+        response = st.write_stream(response_generator(prompt, file))    
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
 
 
 # Parameters to use for the model (file: pdf , prompt: question, response: answer)
