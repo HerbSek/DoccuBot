@@ -6,49 +6,49 @@ import pandas as pd
 st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
 
-custom_header = """
-    <style>
-    .custom-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        padding: 10px;
-        padding-top: 17px;
-        color: grey;
-        text-align: center;
-        font-size: 24px;
-        z-index: 1000;
-        # box-shadow: 0 4px 2px -2px gray;
-    }
-    # .custom-header a {
-    #     margin-left: 20px;
-    #     text-decoration: none;
-    #     color: white;
-    #     font-size: 18px;
-    #     padding: 5px 10px;
-    #     border-radius: 5px;
-    #     background-color: #f44336;
-    # }
-    .custom-header a:hover {
-        background-color: #e74c3c;
-    }
-    .stApp {
-        margin-top: 60px;
-    }
-    </style>
-"""
+# custom_header = """
+#     <style>
+#     .custom-header {
+#         position: fixed;
+#         top: 0;
+#         left: 0;
+#         width: 100%;
+#         background-color: white;
+#         padding: 10px;
+#         padding-top: 17px;
+#         color: grey;
+#         text-align: center;
+#         font-size: 24px;
+#         z-index: 1000;
+#         # box-shadow: 0 4px 2px -2px gray;
+#     }
+#     # .custom-header a {
+#     #     margin-left: 20px;
+#     #     text-decoration: none;
+#     #     color: white;
+#     #     font-size: 18px;
+#     #     padding: 5px 10px;
+#     #     border-radius: 5px;
+#     #     background-color: #f44336;
+#     # }
+#     .custom-header a:hover {
+#         background-color: #e74c3c;
+#     }
+#     .stApp {
+#         margin-top: 60px;
+#     }
+#     </style>
+# """
 
 # Inject the custom header
-st.markdown(custom_header, unsafe_allow_html=True)
+# st.markdown(custom_header, unsafe_allow_html=True)
 
 # HTML for the custom header
-st.markdown("""
-    <div class="custom-header">
-        DoccuBot 
-    </div>
-    """, unsafe_allow_html=True)
+# st.markdown("""
+#     <div class="custom-header">
+#         DoccuBot 
+#     </div>
+#     """, unsafe_allow_html=True)
 
 custom_col_style = """
     <style>
@@ -78,32 +78,29 @@ custom_col_style = """
          margin-bottom: 40px;
     }
     .stApp {
-        margin-top: 50px;
+        margin-top: -10px;
     }
     </style>
 """
 
 
-
-
 hide_streamlit_style = """
             <style>
-           
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-hide_streamlit_watermark = """
-    <style>
+# hide_streamlit_watermark = """
+#     <style>
     
-    footer {visibility: hidden;}
-    .stApp { bottom: 0px; }
-    .viewerBadge_link__1S137 { display: none !important; }
-    </style>
-    """
-st.markdown(hide_streamlit_watermark, unsafe_allow_html=True)
+#     footer {visibility: hidden;}
+#     .stApp { bottom: 0px; }
+#     .viewerBadge_link__1S137 { display: none !important; }
+#     </style>
+#     """
+# st.markdown(hide_streamlit_watermark, unsafe_allow_html=True)
 
 def response_generator(prompt):
     response = "Lets start working!!"
@@ -157,41 +154,37 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-prompt = st.chat_input("What information are you looking for from your pdf ?")
+prompt = st.chat_input("Need help with your pdf?")
 if prompt:    
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
+   
     with st.chat_message("user"):
         st.markdown(prompt)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
 
     with st.chat_message("assistant"):
-        response = st.write_stream(response_generator(prompt))
-    
-
-        
-    # Add assistant response to chat history
+        response = st.write_stream(response_generator(prompt))    
     st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 with st.sidebar:
     mylabel = st.header('Upload')
-    files = st.file_uploader(' ' , accept_multiple_files=False, type='pdf')
+    file = st.file_uploader(' ', accept_multiple_files=False, type='pdf')  # Changed to singular `file`
 
-    if files:
-        # # Extract the file names and store them in a list
-        # file_names = [file.name for file in files]
+    if file:        
+        file_name = file.name
+       
+        files_s = pd.Series([file_name], name='PDFS')
+        
+        # st.write(files_s) // For some purposes
 
-        # # Create a pandas Series for the file names
-        # files_s = pd.Series(file_names, name='PDFS')
-
-        # # Display the Series in the Streamlit app
-        # st.write(files_s)
-
-        # Print for debugging purposes
-        print(files)
+        # st.write(file)
+        st.success('File uploaded successfully !!!')
     else:
-        st.write("No file uploaded yet.")
-  
+        st.error("No file uploaded yet.")
+
+
+# Parameters to use for the model (file: pdf , prompt: question, response: answer)
 
   
 
