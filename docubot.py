@@ -14,7 +14,6 @@ st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="
 
 
 
-
 # custom_header = """
 #     <style>
 #     .custom-header {
