@@ -112,7 +112,6 @@ write_up = "DoccuBot"
 st.header(write_up, divider='rainbow')
 
 
-
 st.markdown(custom_col_style, unsafe_allow_html=True)
 
 col1,col2,col3 = st.columns(3)
