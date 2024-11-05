@@ -1,0 +1,5 @@
+streamlit
+numpy
+pandas
+pymupdf
+python-dotenv

@@ -1,0 +1,12 @@
+[theme]
+base="dark"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = false
+
+[ui]
+hideStreamlitMark = true
+
