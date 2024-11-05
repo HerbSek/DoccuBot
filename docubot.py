@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 import os 
 import requests
 import fitz
+=======
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
 import streamlit as st
 import random
 import time
 import numpy as np 
 import pandas as pd 
+<<<<<<< HEAD
 from dotenv import load_dotenv
 st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
@@ -16,6 +20,63 @@ with open('styles.css') as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html = True)
 
 
+=======
+st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
+
+
+
+
+
+
+
+
+
+
+# custom_header = """
+#     <style>
+#     .custom-header {
+#         position: fixed;
+#         top: 0;
+#         left: 0;
+#         width: 100%;
+#         background-color: white;
+#         padding: 10px;
+#         padding-top: 17px;
+#         color: grey;
+#         text-align: center;
+#         font-size: 24px;
+#         z-index: 1000;
+#         # box-shadow: 0 4px 2px -2px gray;
+#     }
+#     # .custom-header a {
+#     #     margin-left: 20px;
+#     #     text-decoration: none;
+#     #     color: white;
+#     #     font-size: 18px;
+#     #     padding: 5px 10px;
+#     #     border-radius: 5px;
+#     #     background-color: #f44336;
+#     # }
+#     .custom-header a:hover {
+#         background-color: #e74c3c;
+#     }
+#     .stApp {
+#         margin-top: 60px;
+#     }
+#     </style>
+# """
+
+# Inject the custom header
+# st.markdown(custom_header, unsafe_allow_html=True)
+
+# HTML for the custom header
+# st.markdown("""
+#     <div class="custom-header">
+#         DoccuBot 
+#     </div>
+#     """, unsafe_allow_html=True)
+
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
 custom_col_style = """
     <style>
     .col-box {
@@ -63,6 +124,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
+<<<<<<< HEAD
 # Function to work with the reponse 
 def function_AIResponse(prompt, file):
     file_content = file.read()
@@ -108,6 +170,19 @@ def response_generator(prompt, file):
             yield word + " "
             time.sleep(0.3)  
 
+=======
+
+def response_generator(prompt, file):
+    if file is None:
+        response = st.error(" Please upload a file. Please check the sidebar to upload one!!!")   
+       
+      
+    if file is not None:
+        response = "Lets start working!!"
+        for word in response.split():
+            yield word + " "
+            time.sleep(0.2)
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
 
 write_up = "DoccuBot"
 st.header(write_up, divider='rainbow')
@@ -117,6 +192,17 @@ st.markdown(custom_col_style, unsafe_allow_html=True)
 
 col1,col2,col3 = st.columns(3)
 
+<<<<<<< HEAD
+=======
+# with col1:
+#     st.write('An interactive tool used to chat with your pdf documents')
+# with col2:
+#     st.write('Upload your pdfs in the navigation bar ')
+# with col3:
+#     st.write('Ask it any question from the pdf to give out results')
+
+
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
 with col1:
     st.markdown("""
     <div class="col-box col1-bg">
@@ -161,11 +247,15 @@ with st.sidebar:
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+<<<<<<< HEAD
 
 prompt = st.chat_input("Need help with your pdf?")
 
@@ -200,3 +290,27 @@ if prompt :
             st.markdown(response)
         
         st.session_state.messages.append({"role": "assistant", "content": response})
+=======
+prompt = st.chat_input("Need help with your pdf?")
+
+if prompt:    
+   
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    with st.chat_message("assistant"):
+        response = st.write_stream(response_generator(prompt, file))    
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+
+# Parameters to use for the model (file: pdf , prompt: question, response: answer)
+
+  
+
+    
+
+    
+
+>>>>>>> 12df44253ebbda89ead07a4fa6652b545a6a9ebf
