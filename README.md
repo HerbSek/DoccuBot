@@ -11,3 +11,5 @@ Key Features:
 
   ![DoccuBot - Brave 11_5_2024 10_49_57 AM](https://github.com/user-attachments/assets/c309d2b2-6087-4f62-9869-e24e37ff92d5)
 
+
+![DoccuBot - Brave 11_6_2024 7_01_17 AM](https://github.com/user-attachments/assets/600e3bd4-a2d2-4264-ad0e-6395ea8f4e7b)
