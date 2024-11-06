@@ -86,12 +86,7 @@ def function_AIResponse(prompt, file):
         "Content-Type": "application/json"
     }
     response1 = requests.post(url, json=payload, headers=headers)
-    response = response1.json().get('msg')
-     
-    
-    if response1.json()['message'] == 'You have exceeded the DAILY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/sujoyk211/api/infinite-gpt':
-        return 'Daily Limit reached !!! Try again tomorrow :)'
-
+    response = response1.json().get('msg','Daily Limit reached !!! Try again tomorrow :)')
         
     return(response)
 
