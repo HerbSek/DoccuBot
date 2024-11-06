@@ -8,3 +8,6 @@ Key Features:
 - **Real-Time Document Analysis**: Quickly upload and analyze PDF files to retrieve information.
 - **Intelligent Interaction**: Ask questions about document content and receive AI-generated answers.
 - **User-Friendly Interface**: Designed with a focus on user experience, making document querying accessible to everyone.
+
+  ![DoccuBot - Brave 11_5_2024 10_49_57 AM](https://github.com/user-attachments/assets/c309d2b2-6087-4f62-9869-e24e37ff92d5)
+
