@@ -80,18 +80,11 @@ def function_AIResponse(prompt, file):
         "query": prompt,
         "sysMsg": f"""
         [INSTRUCTIONS]
-        A PDF content would be given to you. I would ask any question from the pdf which i should get answers from that. if nothing is given, ask for a pdf content
-        [EXAMPLE INPUT]
-        The Solar System consists of the Sun and all celestial objects gravitationally bound to it, including eight planets, their moons, dwarf planets, and countless smaller bodies such as asteroids and comets. The four inner planets—Mercury, Venus, Earth, and Mars—are rocky and smaller in size, while the outer planets—Jupiter, Saturn, Uranus, and Neptune—are gas giants or ice giants. The asteroid belt lies between Mars and Jupiter, containing numerous rocky fragments.
-        The Sun, a nearly perfect sphere of hot plasma, accounts for about 99.86% of the Solar System's total mass. It generates energy through nuclear fusion, converting hydrogen into helium. This process releases vast amounts of light and heat, sustaining life on Earth and driving weather patterns.
-        [EXAMPLE QUESTION]
-        What are the main components of the Solar System?
-        [EXAMPLE OUTPUT]
-        The Solar System consists of the Sun, eight planets, their moons, dwarf planets, and smaller bodies such as asteroids and comets.
-
+        A PDF would be given to you. I would ask any question from the pdf which i should get answers from that. if nothing is given, ask for a pdf content
+        
         [PDF CONTENT]
         {text}
-
+        
         [RESPONSE]
         """
     }
