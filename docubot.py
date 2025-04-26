@@ -6,10 +6,14 @@ import random
 import time
 import numpy as np 
 import pandas as pd 
-
+from groq import Groq 
 from dotenv import load_dotenv
-st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
+groq_key = os.getenv("groq-key")
+
+client = Groq(api_key = groq_key)
+
+st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
 load_dotenv()
 
@@ -74,30 +78,38 @@ def function_AIResponse(prompt, file):
             page = pdf[page_num]
             text = page.get_text("text")
             text += text 
-    url = "https://infinite-gpt.p.rapidapi.com/infinite-gpt"
+    text = text[1:6000]
+    content = f"""
+You are a helpful and smart assistant named DoccuBot who reads and understands PDF documents. 
 
-    payload = {
-        "query": prompt,
-        "sysMsg": f"""
-        [INSTRUCTIONS]
-        A PDF would be given to you. I would ask any question from the pdf which i should get answers from that. if nothing is given, ask for a pdf content
-        
-        [PDF CONTENT]
-        {text}
-        
-        [RESPONSE]
-        """
-    }
-    headers = {
-        "x-rapidapi-key":  os.getenv('x-rapidapi-key'),
-        "x-rapidapi-host": "infinite-gpt.p.rapidapi.com",
-        "Content-Type": "application/json"
-    }
-    response1 = requests.post(url, json=payload, headers=headers)
-    response = response1.json().get('msg','Daily Limit reached !!! Try again tomorrow :)')
-        
+Here is the document content:
+{text}
+
+Your job:
+- Analyze and understand the full content of the PDF.
+- Respond to the user's query,{prompt} in a friendly, structured, and markdown-formatted way.
+- Provide bullet points, summaries, and explanations strictly by request using markdown syntax.
+- If technical or legal terms are detected, explain them clearly.
+- Ask follow-up questions if the user's request is vague.
+- Be concise but thorough and make sure your answer is easy to read.
+- If mathematical, solve as well.
+
+Use markdown formatting like:
+- Headings (`###`)
+- Bullet points (`-`)
+- Numbered steps
+- Code blocks (```python)
+- Quotes (`>`) if needed
+
+Now, wait for the user to ask a question and respond accordingly.
+"""
+
+    chat_completion = client.chat.completions.create(
+        messages=[{"role": "user", "content": content}],
+        model= "llama-3.3-70b-versatile",
+    )
+    response = chat_completion.choices[0].message.content  
     return(response)
-
 
 
 
@@ -107,9 +119,10 @@ def response_generator(prompt, file):
     else:
         # Write a function to work with Openai to retrive the response from the prompt and replace it with the string just below
         response = function_AIResponse(prompt, file)
-        for word in response.split('\n'):
-            yield word + " "
-            time.sleep(0.3)  
+        # for word in response.split('\n'):
+        #     yield word + " "
+        #     time.sleep(0.3)
+        yield response   
 
 
 write_up = "DoccuBot"

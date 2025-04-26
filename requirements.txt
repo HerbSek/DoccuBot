@@ -3,3 +3,4 @@ numpy
 pandas
 pymupdf
 python-dotenv
+groq
