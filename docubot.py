@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd 
 from groq import Groq 
 from dotenv import load_dotenv
+load_dotenv()
 
 groq_key = os.getenv("groq-key")
 
@@ -15,7 +16,7 @@ client = Groq(api_key = groq_key)
 
 st.set_page_config(page_title="DoccuBot", page_icon=":page_facing_up:", layout="wide")
 
-load_dotenv()
+
 
 with open('styles.css') as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html = True)
@@ -69,47 +70,45 @@ if "messages" not in st.session_state:
 
 
 def function_AIResponse(prompt, file):
+    greetings = ["hello", "hi", "hey", "good morning", "good evening", "what's up"]
+    
+    if prompt.lower().strip() in greetings:
+        return "👋 Hi there! I'm DoccuBot. I can help you understand your PDF file. Would you like a summary, or do you have a question in mind?"
+
     file_content = file.read()
     if not file_content:
         return "Error: Uploaded file is empty."
+
     text = ''
     with fitz.open(stream=file_content, filetype="pdf") as pdf:
         for page_num in range(pdf.page_count):
             page = pdf[page_num]
-            text = page.get_text("text")
-            text += text 
-    text = text[1:6000]
+            text += page.get_text("text")
+
+    text = text[:6000]  # limit to avoid too much input
     content = f"""
-You are a helpful and smart assistant named DoccuBot who reads and understands PDF documents. 
-
-Here is the document content:
-{text}
-
-Your job:
-- Analyze and understand the full content of the PDF.
-- Respond to the user's query,{prompt} in a friendly, structured, and markdown-formatted way.
-- Provide bullet points, summaries, and explanations strictly by request using markdown syntax.
-- If technical or legal terms are detected, explain them clearly.
-- Ask follow-up questions if the user's request is vague.
-- Be concise but thorough and make sure your answer is easy to read.
-- If mathematical, solve as well.
-
-Use markdown formatting like:
-- Headings (`###`)
-- Bullet points (`-`)
-- Numbered steps
-- Code blocks (```python)
-- Quotes (`>`) if needed
-
-Now, wait for the user to ask a question and respond accordingly.
-"""
-
+    You are a helpful assistant reading a PDF. Analyze it and answer the user's question based on this content:
+    {text}
+    
+    Question from user: {prompt}
+    
+    Be conversational, step-by-step, and helpful. Ask follow-up questions if needed.
+    
+    Use markdown formatting like:
+    - Headings (`###`)
+    - Bullet points (`-`)
+    - Numbered steps
+    - Code blocks (```python)
+    - Quotes (`>`) if needed
+    """
+    
     chat_completion = client.chat.completions.create(
         messages=[{"role": "user", "content": content}],
-        model= "llama-3.3-70b-versatile",
+        model="llama-3.3-70b-versatile",
     )
-    response = chat_completion.choices[0].message.content  
-    return(response)
+    
+    response = chat_completion.choices[0].message.content
+    return response or "Hmm, something went wrong. Please try again later."
 
 
 
