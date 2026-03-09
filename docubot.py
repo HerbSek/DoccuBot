@@ -75,6 +75,7 @@ def function_AIResponse(prompt, file):
     if prompt.lower().strip() in greetings:
         return "👋 Hi there! I'm DoccuBot. I can help you understand your PDF file. Would you like a summary, or do you have a question in mind?"
 
+    file.seek(0)
     file_content = file.read()
     if not file_content:
         return "Error: Uploaded file is empty."
@@ -191,18 +192,16 @@ if prompt :
 
     st.session_state.messages.append({"role": "user", "content": prompt})
     if file:
-     
+
         response = ""
-        
-        assistant_message = st.empty()
 
-        for part in response_generator(prompt, file): 
-            response += part  
-            
-           
-            assistant_message.markdown(response)
+        with st.chat_message("assistant"):
+            assistant_message = st.empty()
 
-      
+            for part in response_generator(prompt, file):
+                response += part
+                assistant_message.markdown(response)
+
         st.session_state.messages.append({"role": "assistant", "content": response})
     else:
         
