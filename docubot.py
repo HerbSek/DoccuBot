@@ -59,7 +59,8 @@ custom_col_style = """
 hide_streamlit_style = """
             <style>
             footer {visibility: hidden;}
-            header {visibility: hidden;}
+            [data-testid="stHeader"] {background: transparent;}
+            [data-testid="stDecoration"] {display: none;}
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
